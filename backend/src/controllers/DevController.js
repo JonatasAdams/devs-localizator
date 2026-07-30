@@ -1,6 +1,7 @@
 const axios = require('axios');
 const Dev = require('../models/Dev');
 const parseStringAsArray = require('../utils/parseStringAsArray');
+const devExistenceChecker = require('../utils/devExistenceChecker');
 
 module.exports = {
     async index(req, res) {
@@ -37,5 +38,30 @@ module.exports = {
         }
 
         return res.json({ dev });
+    },
+
+    async update(req, res) {
+        const { github_username } = req.query;
+        const { name, bio } = req.body;
+
+        let dev = await Dev.findOne({ github_username });
+
+        devExistenceChecker(dev);
+
+        dev.name = name;
+        dev.bio = bio;
+        await dev.save();
+
+        return res.json({ dev })
+    },
+
+    async destroy(req, res) {
+        const { github_username } = req.query;
+
+        let dev = await Dev.findOneAndDelete({ github_username });
+
+        devExistenceChecker(dev, res);
+
+        return res.status(204).end();
     }
 };
