@@ -37,7 +37,7 @@ module.exports = {
             });
         }
 
-        return res.json({ dev });
+        return res.json(dev);
     },
 
     async update(req, res) {
@@ -52,7 +52,7 @@ module.exports = {
         dev.bio = bio;
         await dev.save();
 
-        return res.json({ dev })
+        return res.json(dev)
     },
 
     async destroy(req, res) {
