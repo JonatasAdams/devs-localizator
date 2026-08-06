@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from './services/api';
 
 import './global.css';
 import './App.css';
@@ -6,6 +7,7 @@ import './Sidebar.css';
 import './Main.css';
 
 function App() {
+  const [devs, setDevs] = useState([]);
   const [github_username, setGithubusername] = useState('');
   const [techs, setTechs] = useState('');
   const [latitude, setLatitude] = useState('');
@@ -28,10 +30,29 @@ function App() {
     )
   }, []);
 
+  useEffect(() => {
+    async function loadDevs() {
+      const response = await api.get('/devs');
+
+      setDevs(response.data);
+    }
+
+    loadDevs();
+  }, []);
+
   async function handleAddDev(e) {
     e.preventDefault();
 
-    
+    const response = await api.post('/devs', {
+      github_username,
+      techs,
+      latitude,
+      longitude
+    })
+
+    setGithubusername('');
+    setTechs('');
+    setDevs([...devs, response.data])
   }
 
   return (
@@ -93,63 +114,20 @@ function App() {
 
       <main>
         <ul>
-          <li className='dev-item'>
+          {devs.map(dev => (
+            <li key={dev._id} className='dev-item'>
             <header>
-              <img src="https://avatars.githubusercontent.com/u/50053472?v=4" alt="Jonatas Adams" />
+              <img src={dev.avatar_url} alt={dev.name} />
               <div className='user-info'>
-                <strong>Jonatas Adams</strong>
-                <span>ReactJS, ReactNative, Node.js</span>
+                <strong>{dev.name}</strong>
+                <span>{dev.techs.join(', ')}</span>
               </div>
             </header>
-            <p>Software Engineer | .NET C# | JavaScript | React | HTML 5 | CSS 3 | Application Security | Transitioning back to Technology</p>
-            <a href="https://github.com/JonatasAdams">Acessar perfil no Github</a>
+            <p>{dev.bio}</p>
+            <a href={`https://github.com/${dev.github_username}`}>Acessar perfil no Github</a>
           </li>
-          <li className='dev-item'>
-            <header>
-              <img src="https://avatars.githubusercontent.com/u/50053472?v=4" alt="Jonatas Adams" />
-              <div className='user-info'>
-                <strong>Jonatas Adams</strong>
-                <span>ReactJS, ReactNative, Node.js</span>
-              </div>
-            </header>
-            <p>Software Engineer | .NET C# | JavaScript | React | HTML 5 | CSS 3 | Application Security | Transitioning back to Technology</p>
-            <a href="https://github.com/JonatasAdams">Acessar perfil no Github</a>
-          </li>
-          <li className='dev-item'>
-            <header>
-              <img src="https://avatars.githubusercontent.com/u/50053472?v=4" alt="Jonatas Adams" />
-              <div className='user-info'>
-                <strong>Jonatas Adams</strong>
-                <span>ReactJS, ReactNative, Node.js</span>
-              </div>
-            </header>
-            <p>Software Engineer | .NET C# | JavaScript | React | HTML 5 | CSS 3 | Application Security | Transitioning back to Technology</p>
-            <a href="https://github.com/JonatasAdams">Acessar perfil no Github</a>
-          </li>
-          <li className='dev-item'>
-            <header>
-              <img src="https://avatars.githubusercontent.com/u/50053472?v=4" alt="Jonatas Adams" />
-              <div className='user-info'>
-                <strong>Jonatas Adams</strong>
-                <span>ReactJS, ReactNative, Node.js</span>
-              </div>
-            </header>
-            <p>Software Engineer | .NET C# | JavaScript | React | HTML 5 | CSS 3 | Application Security | Transitioning back to Technology</p>
-            <a href="https://github.com/JonatasAdams">Acessar perfil no Github</a>
-          </li>
-          <li className='dev-item'>
-            <header>
-              <img src="https://avatars.githubusercontent.com/u/50053472?v=4" alt="Jonatas Adams" />
-              <div className='user-info'>
-                <strong>Jonatas Adams</strong>
-                <span>ReactJS, ReactNative, Node.js</span>
-              </div>
-            </header>
-            <p>Software Engineer | .NET C# | JavaScript | React | HTML 5 | CSS 3 | Application Security | Transitioning back to Technology</p>
-            <a href="https://github.com/JonatasAdams">Acessar perfil no Github</a>
-          </li>
+          ))}
         </ul>
-
       </main>
     </div>
   );
