@@ -42,14 +42,14 @@ module.exports = {
 
     async update(req, res) {
         const { github_username } = req.query;
-        const { name, bio } = req.body;
+        const { name, techs } = req.body;
 
         let dev = await Dev.findOne({ github_username });
 
         devExistenceChecker(dev);
 
         dev.name = name;
-        dev.bio = bio;
+        dev.techs = techs;
         await dev.save();
 
         return res.json(dev)
