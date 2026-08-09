@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from './services/api';
 import DevItem from './components/DevItem';
 import DevForm from './components/DevForm';
@@ -27,6 +27,10 @@ function App() {
     setDevs([...devs, response.data])
   }
 
+  async function handleDeleteDev(id) {
+    setDevs(devs.filter(dev=> dev._id !== id));
+  }
+
   return (
     <div id="app">
       <aside>
@@ -37,7 +41,7 @@ function App() {
       <main>
         <ul>
           {devs.map(dev => (
-            <DevItem dev={dev} />
+            <DevItem key={dev._id} dev={dev} onDelete={handleDeleteDev}/>
           ))}
         </ul>
       </main>
