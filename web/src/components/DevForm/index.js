@@ -58,6 +58,7 @@ function DevForm({ onSubmit }) {
                     required
                     value={techs}
                     onChange={e => setTechs(e.target.value)}
+                    placeholder="Tecnologias (separadas por vírgula)"
                 />
             </div>
 

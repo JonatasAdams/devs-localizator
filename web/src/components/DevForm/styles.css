@@ -33,6 +33,13 @@ aside form .input-block input {
     border-bottom: 1px solid #eee;
 }
 
+aside form .input-block input::placeholder {
+  color: #999;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+
 aside form button[type=submit] {
     width: 100%;
     border: 0;

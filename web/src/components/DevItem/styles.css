@@ -54,10 +54,16 @@ li.dev-item a:hover {
   position: relative;
 }
 
-.delete-btn {
+.item-actions {
   position: absolute;
   top: 0;
   right: 0;
+  display: flex;
+  gap: 4px;
+}
+
+.edit-btn,
+.delete-btn {
   background: transparent;
   border: 0;
   color: #ACACAC;
@@ -70,7 +76,69 @@ li.dev-item a:hover {
   transition: color 0.2s, background 0.2s;
 }
 
+.edit-btn:hover {
+  color: #3498db;
+  background: rgba(52, 152, 219, 0.1);
+}
+
 .delete-btn:hover {
   color: #e74c3c;
   background: rgba(231, 76, 60, 0.1);
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.edit-form input {
+  width: 100%;
+  height: 32px;
+  font-size: 14px;
+  color: #666;
+  border: 0;
+  border-bottom: 1px solid #eee;
+  background: transparent;
+}
+
+.edit-form input::placeholder {
+  color: #999;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.save-btn,
+.cancel-btn {
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.save-btn {
+  background: #7d40e7;
+  color: #fff;
+  transition: background 0.5s;
+}
+
+.save-btn:hover {
+    background: #6931ca;
+}
+
+.cancel-btn {
+  background: #333;
+  color: #eee;
+}
+
+.cancel-btn:hover {
+  background: #141414;
 }

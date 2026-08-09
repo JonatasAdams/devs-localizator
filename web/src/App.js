@@ -27,8 +27,12 @@ function App() {
     setDevs([...devs, response.data])
   }
 
+  function handleUpdateDev(updatedDev) {
+    setDevs(devs.map(dev => dev._id === updatedDev._id ? updatedDev : dev));
+  }
+
   async function handleDeleteDev(id) {
-    setDevs(devs.filter(dev=> dev._id !== id));
+    setDevs(devs.filter(dev => dev._id !== id));
   }
 
   return (
@@ -41,7 +45,7 @@ function App() {
       <main>
         <ul>
           {devs.map(dev => (
-            <DevItem key={dev._id} dev={dev} onDelete={handleDeleteDev}/>
+            <DevItem key={dev._id} dev={dev} onUpdate={handleUpdateDev} onDelete={handleDeleteDev} />
           ))}
         </ul>
       </main>
