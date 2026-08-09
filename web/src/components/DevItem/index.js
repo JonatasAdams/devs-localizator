@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FiTrash2 } from 'react-icons/fi';
 import './styles.css';
 import api from '../../services/api';
 import ConfirmModal from '../ConfirmModal';
@@ -29,7 +30,7 @@ function DevItem({ dev, onDelete }) {
                     onClick={() => setShowModal(true)}
                     aria-label='Excluir dev'
                 >
-                    X
+                    <FiTrash2 size={18} />
                 </button>
             </header>
             <p>{dev.bio}</p>
