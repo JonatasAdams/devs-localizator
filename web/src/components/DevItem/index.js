@@ -11,10 +11,6 @@ function DevItem({ dev, onDelete, onUpdate }) {
     const [techs, setTechs] = useState(dev.techs.join(', '));
 
     async function handleDelete() {
-        const confirmed = window.confirm(`Tem certeza que deseja excluir ${dev.name}?`)
-
-        if (!confirmed) return;
-
         await api.delete(`/delete?github_username=${dev.github_username}`);
         onDelete(dev._id);
         setShowModal(false);
